@@ -21,7 +21,7 @@
 #include "ChiliWin.h"
 #include "ChiliException.h"
 #include "Keyboard.h"
-//#include "Mouse.h"
+#include "Mouse.h"
 //#include "Graphics.h"
 //#include <optional>
 //#include <memory>
@@ -61,6 +61,7 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
+	void SetTitle(const std::string& title);
 private:
 	//void ConfineCursor() noexcept;
 	//void FreeCursor() noexcept;
@@ -73,7 +74,7 @@ private:
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 public:
 	Keyboard kbd;
-//	Mouse mouse;
+	Mouse mouse;
 private:
 	bool cursorEnabled = true;
 	int width;

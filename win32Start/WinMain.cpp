@@ -1,5 +1,5 @@
 #include "Window.h"
-
+#include <sstream>
 int CALLBACK WinMain (
 	HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
@@ -17,6 +17,8 @@ int CALLBACK WinMain (
             // TranslateMessage will post auxilliary WM_CHAR messages from key msgs
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+
+            // key test
             if (wnd.kbd.KeyIsPressed(VK_SPACE))
             {
                 MessageBox(nullptr, "Something Happon!", "Space Key Was Pressed", MB_OK | MB_ICONEXCLAMATION);
@@ -24,6 +26,50 @@ int CALLBACK WinMain (
             if (wnd.kbd.KeyIsPressed(VK_MENU))
             {
                 MessageBox(nullptr, "Something Happon!", "The alt key was pressed", MB_OK | MB_ICONEXCLAMATION);
+            }
+
+            //// mouse test
+            //while (!wnd.mouse.IsEmpty())
+            //{
+            //    const auto e = wnd.mouse.Read();
+            //    switch (e.GetType())
+            //    {
+            //    case Mouse::Event::Type::Leave:
+            //        wnd.SetTitle("Gone!");
+            //        break;
+            //    case Mouse::Event::Type::Move:
+            //    {
+            //        std::ostringstream oss;
+            //        oss << "Mouse moved to (" << e.GetPosX() << "," << e.GetPosY() << ")";
+            //        wnd.SetTitle(oss.str());
+            //    }
+            //    break;
+            //    }
+            //}
+            // wheel code
+            static int i = 0;
+            while (!wnd.mouse.IsEmpty())
+            {
+                const auto e = wnd.mouse.Read();
+                switch (e.GetType())
+                {
+                case Mouse::Event::Type::WheelUp:
+                    i++;
+                    {
+                        std::ostringstream oss;
+                        oss << "Up: " << i;
+                        wnd.SetTitle(oss.str());
+                    }
+                    break;
+                case Mouse::Event::Type::WheelDown:
+                    i--;
+                    {
+                        std::ostringstream oss;
+                        oss << "Down: " << i;
+                        wnd.SetTitle(oss.str());
+                    }
+                    break;
+                }
             }
         }
         // check if GetMessage call itself borked
