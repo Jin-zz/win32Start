@@ -102,12 +102,10 @@ Window::Window(int width, int height, const char* name)
 		throw CHWND_LAST_EXCEPT();
 	}
 	// newly created windows start off as hidden
-	// show window
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
-	//// Init ImGui Win32 Impl
-	//ImGui_ImplWin32_Init(hWnd);
-	//// create graphics object
-	//pGfx = std::make_unique<Graphics>(hWnd, width, height);
+	// create graphics object
+	pGfx = std::make_unique<Graphics>(hWnd);
+
 	//// register mouse raw input device
 	//RAWINPUTDEVICE rid;
 	//rid.usUsagePage = 0x01; // mouse page
@@ -156,6 +154,10 @@ std::optional<int> Window::ProcessMessages()
 	return {};
 }
 
+Graphics& Window::Gfx()
+{
+	return *pGfx;
+}
 
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {

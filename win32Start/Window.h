@@ -22,9 +22,9 @@
 #include "ChiliException.h"
 #include "Keyboard.h"
 #include "Mouse.h"
-//#include "Graphics.h"
+#include "Graphics.h"
 #include <optional>
-//#include <memory>
+#include <memory>
 class Window
 {
 public:
@@ -64,6 +64,7 @@ public:
 	// 处理所有窗口消息
 	static std::optional<int> ProcessMessages();
 	void SetTitle(const std::string& title);
+	Graphics& Gfx();
 private:
 	//void ConfineCursor() noexcept;
 	//void FreeCursor() noexcept;
@@ -82,7 +83,7 @@ private:
 	int width;
 	int height;
 	HWND hWnd;
-	//std::unique_ptr<Graphics> pGfx;
+	std::unique_ptr<Graphics> pGfx;
 	//std::vector<BYTE> rawBuffer;
 	//std::string commandLine;
 };
