@@ -23,7 +23,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 //#include "Graphics.h"
-//#include <optional>
+#include <optional>
 //#include <memory>
 class Window
 {
@@ -61,6 +61,8 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
+	// 处理所有窗口消息
+	static std::optional<int> ProcessMessages();
 	void SetTitle(const std::string& title);
 private:
 	//void ConfineCursor() noexcept;
