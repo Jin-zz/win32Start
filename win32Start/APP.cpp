@@ -23,17 +23,35 @@ int App::Go()
 
 void App::DoFrame()
 {
-	while (const auto e = wnd.mouse.Read())
+	//while (const auto e = wnd.mouse.Read())
+	//{
+	//	switch (e->GetType())
+	//	{
+	//	case Mouse::Event::Type::Move:
+	//	{
+	//		std::ostringstream oss;
+	//		oss << "Mouse moved to: (" << e->GetPosX() << "," << e->GetPosY() << ")\n";
+	//		wnd.SetTitle(oss.str());
+	//		break;
+	//	}
+	//	}
+	//}
+
+	static std::string title;
+	while (const auto e = wnd.kbd.ReadKey())
 	{
-		switch (e->GetType())
+		if (e->IsPress() && e->GetCode() == VK_BACK)
 		{
-		case Mouse::Event::Type::Move:
-		{
-			std::ostringstream oss;
-			oss << "Mouse moved to: (" << e->GetPosX() << "," << e->GetPosY() << ")\n";
-			wnd.SetTitle(oss.str());
-			break;
+			title.clear();
+			wnd.SetTitle(title);
 		}
+	}
+	while (const auto c = wnd.kbd.ReadChar())
+	{
+		if (*c != 0x8) // don't print backspace
+		{
+			title += *c;
+			wnd.SetTitle(title);
 		}
 	}
 

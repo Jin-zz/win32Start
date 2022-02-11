@@ -20,6 +20,7 @@
 #pragma once
 #include <queue>
 #include <bitset>
+#include <optional>
 
 class Keyboard
 {
@@ -32,17 +33,11 @@ public:
 		{
 			Press,
 			Release,
-			Invalid
 		};
 	private:
 		Type type;
 		unsigned char code;
 	public:
-		Event() noexcept
-			:
-			type(Type::Invalid),
-			code(0u)
-		{}
 		Event(Type type, unsigned char code) noexcept
 			:
 			type(type),
@@ -56,10 +51,6 @@ public:
 		{
 			return type == Type::Release;
 		}
-		bool IsValid() const noexcept
-		{
-			return type != Type::Invalid;
-		}
 		unsigned char GetCode() const noexcept
 		{
 			return code;
@@ -71,12 +62,12 @@ public:
 	Keyboard& operator=(const Keyboard&) = delete;
 	// key event stuff
 	bool KeyIsPressed(unsigned char keycode) const noexcept;  // 是否按下
-	Event ReadKey() noexcept;  // 读取键盘队列的事件
+	std::optional<Event> ReadKey() noexcept; // 读取键盘队列的事件
 	bool KeyIsEmpty() const noexcept;  // 检查键盘事件是否为空
 	//刷新队列 清除队列
 	void FlushKey() noexcept;
 	// char event stuff
-	char ReadChar() noexcept;  // 处理文本事件 字符流
+	std::optional<char> ReadChar() noexcept;  // 处理文本事件 字符流
 	bool CharIsEmpty() const noexcept;
 	void FlushChar() noexcept;
 	void Flush() noexcept;  // 同时刷新字符事件 和 键盘队列
