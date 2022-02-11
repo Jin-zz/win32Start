@@ -19,6 +19,21 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{340fa411-c088-4c7c-ba19-983bf318b340}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Bindable">
+      <UniqueIdentifier>{532b2aaa-0d60-46bc-87f8-69a722634452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Macros">
+      <UniqueIdentifier>{7e723f1a-ba8a-40a9-b617-614905cfbeb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Drawable">
+      <UniqueIdentifier>{3f2774af-336b-40bb-a80a-db153bbfb9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Bindable">
+      <UniqueIdentifier>{ceb0c54b-6adc-4a80-9087-2be9cb35c0a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Drawable">
+      <UniqueIdentifier>{8c4d8575-6a18-478f-8c92-14be80e4f2a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -50,6 +65,36 @@
     </ClCompile>
     <ClCompile Include="DxgiInfoManager.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>源文件\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>源文件\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformCbuf.cpp">
+      <Filter>源文件\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Topology.cpp">
+      <Filter>源文件\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>源文件\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="InputLayout.cpp">
+      <Filter>源文件\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>源文件\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawable.cpp">
+      <Filter>源文件\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>源文件\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Bindable.cpp">
+      <Filter>源文件\Bindable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +133,51 @@
     </ClInclude>
     <ClInclude Include="DxgiInfoManager.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsThrowMacros.h">
+      <Filter>头文件\Macros</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsThrowMacros.h">
+      <Filter>头文件\Macros</Filter>
+    </ClInclude>
+    <ClInclude Include="Bindable.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="BindableBase.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffers.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Indexbuffer.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBuffer.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Topology.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformCbuf.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>头文件\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>头文件\Drawable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
