@@ -19,7 +19,7 @@
  *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
  ******************************************************************************************/
 #include "Mouse.h"
-#include <Windows.h>
+#include "ChiliWin.h"
 
 std::pair<int, int> Mouse::GetPos() const noexcept
 {
@@ -51,7 +51,7 @@ bool Mouse::RightIsPressed() const noexcept
 	return rightIsPressed;
 }
 
-Mouse::Event Mouse::Read() noexcept
+std::optional<Mouse::Event> Mouse::Read() noexcept
 {
 	if (buffer.size() > 0u)
 	{
@@ -59,10 +59,7 @@ Mouse::Event Mouse::Read() noexcept
 		buffer.pop();
 		return e;
 	}
-	else
-	{
-		return Mouse::Event();
-	}
+	return {};
 }
 
 void Mouse::Flush() noexcept
