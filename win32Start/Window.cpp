@@ -19,7 +19,7 @@
 ******************************************************************************************/
 #include "Window.h"
 #include <sstream>
-#include "resource.h"
+#include "resource1.h"
 #include "WindowsThrowMacros.h"
 
 

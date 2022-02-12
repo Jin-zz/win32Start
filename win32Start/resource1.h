@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ 生成的包含文件。
-// 供 win32Start.rc 使用
+// Microsoft Visual C++ generated include file.
+// Used by hw3d.rc
 //
 #define IDI_ICON1                       101
 

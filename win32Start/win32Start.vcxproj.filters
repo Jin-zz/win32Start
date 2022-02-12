@@ -34,6 +34,9 @@
     <Filter Include="源文件\Drawable">
       <UniqueIdentifier>{8c4d8575-6a18-478f-8c92-14be80e4f2a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Geometry">
+      <UniqueIdentifier>{51c6e847-28eb-4089-9471-9dc678d2a9c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -58,9 +61,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Graphics.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="dxerr.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DxgiInfoManager.cpp">
@@ -96,6 +96,15 @@
     <ClCompile Include="Bindable.cpp">
       <Filter>源文件\Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="Pyramid.cpp">
+      <Filter>源文件\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Melon.cpp">
+      <Filter>源文件\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="dxerr.cpp">
+      <Filter>Dxerr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChiliWin.h">
@@ -105,9 +114,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ChiliException.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource1.h">
@@ -126,9 +132,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Graphics.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="dxerr.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="DxgiInfoManager.h">
@@ -182,6 +185,45 @@
     <ClInclude Include="DrawableBase.h">
       <Filter>头文件\Drawable</Filter>
     </ClInclude>
+    <ClInclude Include="Melon.h">
+      <Filter>头文件\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Pyramid.h">
+      <Filter>头文件\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Sheet.h">
+      <Filter>头文件\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Sampler.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Prism.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Cone.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="ChiliMath.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexedTriangleList.h">
+      <Filter>头文件\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="dxerr.h">
+      <Filter>Dxerr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="win32Start.rc">
@@ -205,10 +247,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
+    <FxCompile Include="ColorBlendPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
+    <FxCompile Include="ColorBlendVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="ColorIndexVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="ColorIndexPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
