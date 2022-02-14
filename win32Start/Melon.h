@@ -4,7 +4,7 @@
 class Melon : public DrawableBase<Melon>
 {
 public:
-    Melon(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float angle,
+    Melon(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float r, float rotatespeed, 
         std::mt19937& rng,
         std::uniform_real_distribution<float>& adist,
         std::uniform_real_distribution<float>& ddist,
@@ -15,15 +15,28 @@ public:
     void Update(float dt) noexcept override;
     DirectX::XMMATRIX GetTransformXM() const noexcept override;
 
+public:
+    // translate
+    float transX = 0.0f;
+    float transY = 0.0f;
+    float transZ = 0.0f;
 private:
+    // pos
+    struct {
+        float x = 0.0f;
+        float y = 0.0f;
+        float z = 0.0f;
+    } pos;
     // scale
     float scaleOffset;
-    // translate
-    float transX;
-    float transY;
-    float transZ;
+
+    // rotate speed
+    float rotateSpeed = 0.0f;
     // rotate
-    float angle;
+    float angle = 0.0f;
+    float last_angle = 0.0f;
+    // cycle size
+    float radius;
     // positional
     float roll = 0.0f;
     float pitch = 0.0f;

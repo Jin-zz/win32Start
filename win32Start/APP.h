@@ -10,12 +10,17 @@ public:
 	// 初始化游戏逻辑
 	int Go();
 	~App();
+
 private:
 	// 每一帧的游戏逻辑 
 	void DoFrame();
 private:
 	Window wnd;
 	ChiliTimer timer;
-	std::vector<std::unique_ptr<class Drawable>> drawables;
+	std::vector<std::unique_ptr<class Melon>> drawables;
+	std::vector<std::unique_ptr<class Melon>> melons;
+	std::vector<std::unique_ptr<class Box>> boxs;
+
+
 	static constexpr size_t nDrawables = 180;
 };

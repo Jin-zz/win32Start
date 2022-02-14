@@ -24,4 +24,7 @@ private:
 private:
     const class IndexBuffer* pIndexBuffer = nullptr;
     std::vector<std::unique_ptr<Bindable>> binds;
+public:
+    //// change obit
+    //std::string orbitName = "in_earth";  // in_earth in_moon in_earthtomoon
 };
