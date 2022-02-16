@@ -51,6 +51,10 @@ bool Mouse::RightIsPressed() const noexcept
 	return rightIsPressed;
 }
 
+int Mouse::getWheelDeltaCarry() const noexcept {
+	return wheelDeltaCarry;
+}
+
 std::optional<Mouse::Event> Mouse::Read() noexcept
 {
 	if (buffer.size() > 0u)

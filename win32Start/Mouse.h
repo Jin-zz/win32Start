@@ -47,6 +47,7 @@ public:
 		bool rightIsPressed;
 		int x;
 		int y;
+		int wheelDeltaCarry;
 	public:
 		Event(Type type, const Mouse& parent) noexcept
 			:
@@ -54,7 +55,8 @@ public:
 			leftIsPressed(parent.leftIsPressed),
 			rightIsPressed(parent.rightIsPressed),
 			x(parent.x),
-			y(parent.y)
+			y(parent.y),
+			wheelDeltaCarry(parent.wheelDeltaCarry)
 		{}
 		Type GetType() const noexcept
 		{
@@ -80,6 +82,9 @@ public:
 		{
 			return rightIsPressed;
 		}
+		int getWheelDeltaCarry() const noexcept {
+			return wheelDeltaCarry;
+		}
 	};
 public:
 	Mouse() = default;
@@ -91,6 +96,9 @@ public:
 	bool IsInWindow() const noexcept;
 	bool LeftIsPressed() const noexcept;
 	bool RightIsPressed() const noexcept;
+	int getWheelDeltaCarry() const noexcept;
+	int wheelDeltaCarry = 0;
+
 	std::optional<Mouse::Event> Read() noexcept;
 	bool IsEmpty() const noexcept
 	{
@@ -116,6 +124,5 @@ private:
 	bool leftIsPressed = false;
 	bool rightIsPressed = false;
 	bool isInWindow = false;
-	int wheelDeltaCarry = 0;
 	std::queue<Event> buffer;
 };

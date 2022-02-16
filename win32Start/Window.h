@@ -76,6 +76,7 @@ public:
 	static std::optional<int> ProcessMessages() noexcept;
 	void SetTitle(const std::string& title);
 	Graphics& Gfx();
+	int wnddelta;
 private:
 	//void ConfineCursor() noexcept;
 	//void FreeCursor() noexcept;
@@ -89,10 +90,10 @@ private:
 public:
 	Keyboard kbd;
 	Mouse mouse;
-private:
-	bool cursorEnabled = true;
 	int width;
 	int height;
+private:
+	bool cursorEnabled = true;
 	HWND hWnd;
 	std::unique_ptr<Graphics> pGfx;
 	//std::vector<BYTE> rawBuffer;

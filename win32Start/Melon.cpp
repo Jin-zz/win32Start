@@ -132,8 +132,8 @@ DirectX::XMMATRIX Melon::GetTransformXM() const noexcept
 	return dx::XMMatrixScaling(scaleOffset, scaleOffset, scaleOffset) * // Ëõ·Å¾ØÕó
 		dx::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *  // Ðý×ª¾ØÕó Å·À­½Ç
 		//cycleMat *
-		dx::XMMatrixTranslation(transX, transY, transZ) *  // Æ½ÒÆ¾ØÕó
+		dx::XMMatrixTranslation(transX, transY, transZ); // Æ½ÒÆ¾ØÕó
 		//dx::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
-		dx::XMMatrixTranslation(0.0f, 0.0f, 10.0f);
+		//dx::XMMatrixTranslation(0.0f, 0.0f, 10.0f);
 }
 

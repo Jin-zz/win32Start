@@ -31,6 +31,13 @@ public:
         transY_moon = y;
         transZ_moon = z;
     }
+    DirectX::XMVECTOR tangent = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+    DirectX::XMVECTOR UpDirection = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
+    void setTangent();
+    DirectX::XMVECTOR getTangentPos(float dis);
+    void updateCamera();
+
 public:
     enum class State
     {
@@ -46,9 +53,25 @@ public:
     bool isStart = false; // 月球轨道切换 地月轨道 是否进入地月轨道
     bool isComplete = false; // 月球轨道切换 地月轨道 是否进入地月轨道
     float radius_inMoon = 0.0f;
+
+    // translate
+    float transX = 0.0f;
+    float transY = 0.0f;
+    float transZ = 0.0f;
+
     float transX_moon = 0.0f;
     float transY_moon = 0.0f;
     float transZ_moon = 0.0f;
+
+    //camera 
+    DirectX::XMVECTOR cameraPos = DirectX::XMVectorSet(0.1f, 0.0f, 0.0f, 0.0f);
+    DirectX::XMVECTOR cameraFocus = DirectX::XMVectorSet(0.0f, 1.0, 0.0, 0.0f);
+    DirectX::XMVECTOR cameraUp = DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+    float cameraX0 = 0.0f;
+    float cameraY0 = 10.0f;
+    float cameraZ0 = 0.0f;
+
+
 
 private:
     // pos
@@ -59,10 +82,7 @@ private:
     } pos;
     // scale
     float scaleOffset;
-    // translate
-    float transX = 0.0f;
-    float transY = 0.0f;
-    float transZ = 0.0f;
+
     // rotate speed
     float rotateSpeed = 0.0f;
     // rotate

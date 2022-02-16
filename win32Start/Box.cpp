@@ -100,6 +100,57 @@ Box::Box(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float r
 	);
 }
 
+void Box::setTangent() {
+	namespace dx = DirectX;
+	tangent = dx::XMVector3Transform(
+		dx::XMVectorSet(transX * 2.0f, transY * 2.0f,transZ * 2.0f, 0.0f),
+		dx::XMMatrixRotationZ(90)
+	);
+	tangent = dx::XMVector3Transform(tangent,
+		dx::XMMatrixTranslation(transX, transY, transZ)
+	);
+	UpDirection = dx::XMVectorSet(transX, transY, transZ, 0.0f);
+
+}
+
+DirectX::XMVECTOR Box::getTangentPos(float dis) {
+	namespace dx = DirectX;
+	DirectX::XMVECTOR point;
+	point = dx::XMVector3Transform(
+		dx::XMVectorSet(transX * 0.5f, transY * 0.5f, transZ * 0.5f, 0.0f),
+		dx::XMMatrixRotationZ(90)
+	);
+	point = dx::XMVector3Transform(tangent,
+		dx::XMMatrixTranslation(transX, transY, transZ)
+	);
+
+	return point;
+
+}
+
+void Box::updateCamera() {
+	namespace dx = DirectX;
+
+	cameraPos = dx::XMVector3Transform(
+		dx::XMVector3Transform(
+		dx::XMVectorSet(cameraX0, cameraY0, cameraZ0, 0.0f),
+		GetTransformXM()
+		),
+		dx::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, 0.0f* PI / 180.0f)
+	);
+
+	cameraFocus = dx::XMVector3Transform(
+		dx::XMVectorSet(0.0f, 1.0, 0.0, 0.0f),
+		GetTransformXM()
+	);
+	cameraUp = dx::XMVector3Transform(
+		dx::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f),
+		GetTransformXM()
+	);
+
+}
+
+
 void Box::Update(float dt) noexcept
 {
 	//roll += droll * dt;
@@ -108,6 +159,9 @@ void Box::Update(float dt) noexcept
 	//theta += dtheta * dt;
 	//phi += dphi * dt;
 	//chi += dchi * dt;
+
+	setTangent();
+	updateCamera();
 
 	if (radius != 0) {
 		float ofx = 0.0f;
@@ -132,13 +186,6 @@ void Box::Update(float dt) noexcept
 			moon_angle = moon_angle == 0.0f ? angle : moon_angle;
 			float angleInMoon = angle - moon_angle;
 
-			//// 月球轨道 右端点
-			//float moonx0 = cos(0.0f * PI / 180.0f);
-			//float moony0 = sin(0.0f * PI / 180.0f);
-			//// 旋转后的月球轨道右端点（初始点）
-			//float moonx0Rotate = moonx0 * cos(moon_angle * PI / 180.0f) - moony0 * sin(moon_angle * PI / 180.0f);
-			//float moony0Rotate = moonx0 * sin(moon_angle * PI / 180.0f) + moony0 * cos(moon_angle * PI / 180.0f);
-
 			float r = radius_inMoon;
 			// 月球上点
 			float moonx = r * cos(angleInMoon * PI / 180.0f);
@@ -147,8 +194,8 @@ void Box::Update(float dt) noexcept
 			float moonxRotate = moonx * cos(moon_angle * PI / 180.0f) - moony * sin(moon_angle * PI / 180.0f);
 			float moonyRotate = moonx * sin(moon_angle * PI / 180.0f)  + moony * cos(moon_angle * PI / 180.0f);
 
-			ofx = moonxRotate  + transX_moon * 2.0f;
-			ofy = moonyRotate + transY_moon*2.0f;
+			ofx = moonxRotate  + transX_moon;
+			ofy = moonyRotate + transY_moon;
 
 
 		}
@@ -157,8 +204,8 @@ void Box::Update(float dt) noexcept
 
 			last_angle = last_angle == 0.0f ? angle : last_angle;
 
-			float a = 8.5f;
-			float b = 6.0f;
+			float a = 5.75f;
+			float b = 4.0f;
 
 			float angleInOval = angle - last_angle;
 
@@ -185,7 +232,7 @@ void Box::Update(float dt) noexcept
 				ofy0 = radius * sin(last_angle * PI / 180.0f);
 			}
 			else {
-				float r = 10.f + radius_inMoon;
+				float r = 7.0f + radius_inMoon;
 				ofx0 = r * cos(last_angle * PI / 180.0f);
 				ofy0 = r * sin(last_angle * PI / 180.0f);
 			}
@@ -201,7 +248,7 @@ void Box::Update(float dt) noexcept
 		transX = ofx;
 		transY = ofy;
 
-
+		setTangent();
 
 
 	}
@@ -211,7 +258,7 @@ bool Box::isNearEarth() noexcept {
 	std::vector<float> v1{ transX, transY, transZ};
 	std::vector<float> v2{ 0.0f, 0.0f, 0.0f };
 	float dis = getDis(v1, v2);
-	float goalDis = 5.0f;  // 地球轨道半径
+	float goalDis = 3.0f;  // 地球轨道半径
 	if (dis > goalDis) {
 		return false;
 	}
@@ -223,15 +270,15 @@ bool Box::isNearEarth() noexcept {
 }
 
 bool Box::isNearMoon(float moonPosx, float moonPosy, float moonPosz) noexcept {
-	std::vector<float> v1{ transX, transY, transZ };
+	std::vector<float> v1{ transX * 2.0f, transY * 2.0f, transZ * 2.0f };
 	std::vector<float> v2{ moonPosx, moonPosy, moonPosz };
 	float dis = getDis(v1, v2);
-	float goalDis = 2.5f;  // 月球轨道半径
+	float goalDis = 3.2f;  // 月球轨道半径
 	if (dis > goalDis) {
 		return false;
 	}
 	else {
-		radius_inMoon = dis;
+		radius_inMoon = dis / 2.0f;
 		return true;
 	}
 
@@ -249,8 +296,9 @@ DirectX::XMMATRIX Box::GetTransformXM() const noexcept
 	namespace dx = DirectX;
 	return dx::XMLoadFloat3x3(&mt) *
 		dx::XMMatrixScaling(scaleOffset, scaleOffset, scaleOffset) * // 缩放矩阵
-		dx::XMMatrixRotationRollPitchYaw(pitch, yaw, angle * PI / 180.0f) * 
-		dx::XMMatrixTranslation(transX, transY, transZ) *  // 平移矩阵
+		dx::XMMatrixRotationRollPitchYaw(pitch, yaw, angle * PI / 180.0f) *
+		dx::XMMatrixTranslation(transX, transY, transZ);  // 平移矩阵
 		//dx::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
-		dx::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
+		//dx::XMMatrixTranslation(0.0f, 0.0f, 10.0f);
 }
+

@@ -32,15 +32,16 @@ App::App()
 		));
 
 	drawables.push_back(std::make_unique<Melon>(
-		gfx, 0.5f, 5.0f, 0.0f, 0.0f, 5.0f, 1.0f, rng, adist, ddist,
+		gfx, 0.5f, 5.0f, 0.0f, 0.0f, 7.0f, 1.0f, rng, adist, ddist,
 		odist, rdist, longdist, latdist
 		));
 
 
 	boxs.push_back(std::make_unique<Box>(
-		gfx, 0.5f, 5.0f, 0.0f, 0.0f, 5.0f, rng, adist, ddist,
+		gfx, 0.1f, 5.0f, 0.0f, 0.0f, 3.0f, rng, adist, ddist,
 	    odist, rdist, bdist
 		)); 
+
 
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 }
@@ -65,12 +66,14 @@ App::~App()
 
 void App::DoFrame()
 {
-	const auto dt = timer.Mark();
-	wnd.Gfx().ClearBuffer(0.07f, 0.0f, 0.12f);
-
 	Melon* earth = drawables[0].get();
 	Melon* moon = drawables[1].get();
 	Box* box = boxs[0].get();
+
+	const auto dt = timer.Mark();
+	wnd.Gfx().ClearBuffer(0.07f, 0.0f, 0.12f);
+	wnd.Gfx().SetCamera(cam.GetMatrix(box));
+	//wnd.Gfx().SetCamera(dx::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
 
 	box->getMoonPos(moon->transX, moon->transY, moon->transZ);
 
@@ -128,5 +131,59 @@ void App::DoFrame()
 		d->Update(dt);
 		d->Draw(wnd.Gfx());
 	}
+
+	while (const auto e = wnd.mouse.Read())
+	{
+		switch (e->GetType())
+		{
+			case Mouse::Event::Type::Move:
+			{
+				updateCameraRotateMouse(e->GetPosX(), e->GetPosY());
+				/*std::ostringstream oss;
+				oss << "Mouse moved to: (" << cameraRotateX << "," << cameraRotateY << ")\n";
+				wnd.SetTitle(oss.str());*/
+				break;
+			}
+			case Mouse::Event::Type::WheelUp:
+			{
+				std::ostringstream oss;
+				oss << "Mouse moved to: (" << e->getWheelDeltaCarry() << ")\n";
+				wnd.SetTitle(oss.str());
+				break;
+			}
+		}
+	}
+
+
 	wnd.Gfx().EndFrame();
+}
+
+void App::updateCameraRotateMouse(float posx, float posy) {
+	switch (cam.state) {
+	case Camera::State::FirstPerson:
+		cameraRotateX = posx / wnd.width * 180.0f - 90.0f;
+		cameraRotateY = -posy / wnd.height * 90.0f + 45.0f;
+		cameraRotateX = cameraRotateX * PI / 180.0f;
+		cameraRotateY = cameraRotateY * PI / 180.0f;
+		cam.pitch = cameraRotateY;
+		cam.yaw = cameraRotateX;
+		break;
+
+	case Camera::State::ThirdPerson:
+
+		cameraRotateX = posx / wnd.width * 10.0f - 5.0f;
+		cameraRotateY = posy / wnd.height * 10.0f - 5.0f;
+
+		cameraRotateX = abs(cameraRotateX) > abs(cameraRotateY) ? cameraRotateX : 0.0f;
+		cameraRotateY = abs(cameraRotateX) > abs(cameraRotateY) ? 0.0f : cameraRotateY;
+
+
+		Box* box = boxs[0].get();
+		box->cameraX0 = cameraRotateY;
+		box->cameraZ0 = cameraRotateX;
+
+	}
+
+
+	
 }

@@ -28,6 +28,7 @@ public:
         std::string GetErrorString() const noexcept;
         std::string GetErrorDescription() const noexcept;
         std::string GetErrorInfo() const noexcept;
+
     private:
         HRESULT hr;
         std::string info;
@@ -59,9 +60,12 @@ public:
 	void ClearBuffer(float red, float green, float blue) noexcept;
     void DrawIndexed(UINT count) noexcept(!IS_DEBUG);
     void SetProjection(DirectX::FXMMATRIX proj) noexcept;
+    void SetCamera(DirectX::FXMMATRIX cam) noexcept;
+    DirectX::XMMATRIX GetCamera() const noexcept;
     DirectX::XMMATRIX GetProjection() const noexcept;
 private:
     DirectX::XMMATRIX projection;
+    DirectX::XMMATRIX camera;
 #ifndef NDEBUG
     DxgiInfoManager infoManager;
 #endif
