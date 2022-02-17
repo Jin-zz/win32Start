@@ -100,33 +100,33 @@ Box::Box(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float r
 	);
 }
 
-void Box::setTangent() {
-	namespace dx = DirectX;
-	tangent = dx::XMVector3Transform(
-		dx::XMVectorSet(transX * 2.0f, transY * 2.0f,transZ * 2.0f, 0.0f),
-		dx::XMMatrixRotationZ(90)
-	);
-	tangent = dx::XMVector3Transform(tangent,
-		dx::XMMatrixTranslation(transX, transY, transZ)
-	);
-	UpDirection = dx::XMVectorSet(transX, transY, transZ, 0.0f);
+//void Box::setTangent() {
+//	namespace dx = DirectX;
+//	tangent = dx::XMVector3Transform(
+//		dx::XMVectorSet(transX * 2.0f, transY * 2.0f,transZ * 2.0f, 0.0f),
+//		dx::XMMatrixRotationZ(90)
+//	);
+//	tangent = dx::XMVector3Transform(tangent,
+//		dx::XMMatrixTranslation(transX, transY, transZ)
+//	);
+//	UpDirection = dx::XMVectorSet(transX, transY, transZ, 0.0f);
+//
+//}
 
-}
-
-DirectX::XMVECTOR Box::getTangentPos(float dis) {
-	namespace dx = DirectX;
-	DirectX::XMVECTOR point;
-	point = dx::XMVector3Transform(
-		dx::XMVectorSet(transX * 0.5f, transY * 0.5f, transZ * 0.5f, 0.0f),
-		dx::XMMatrixRotationZ(90)
-	);
-	point = dx::XMVector3Transform(tangent,
-		dx::XMMatrixTranslation(transX, transY, transZ)
-	);
-
-	return point;
-
-}
+//DirectX::XMVECTOR Box::getTangentPos(float dis) {
+//	namespace dx = DirectX;
+//	DirectX::XMVECTOR point;
+//	point = dx::XMVector3Transform(
+//		dx::XMVectorSet(transX * 0.5f, transY * 0.5f, transZ * 0.5f, 0.0f),
+//		dx::XMMatrixRotationZ(90)
+//	);
+//	point = dx::XMVector3Transform(tangent,
+//		dx::XMMatrixTranslation(transX, transY, transZ)
+//	);
+//
+//	return point;
+//
+//}
 
 void Box::updateCamera() {
 	namespace dx = DirectX;
@@ -160,7 +160,6 @@ void Box::Update(float dt) noexcept
 	//phi += dphi * dt;
 	//chi += dchi * dt;
 
-	setTangent();
 	updateCamera();
 
 	if (radius != 0) {
@@ -248,7 +247,6 @@ void Box::Update(float dt) noexcept
 		transX = ofx;
 		transY = ofy;
 
-		setTangent();
 
 
 	}

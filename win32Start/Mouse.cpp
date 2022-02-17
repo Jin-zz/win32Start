@@ -51,8 +51,8 @@ bool Mouse::RightIsPressed() const noexcept
 	return rightIsPressed;
 }
 
-int Mouse::getWheelDeltaCarry() const noexcept {
-	return wheelDeltaCarry;
+int Mouse::getWheelDelta() const noexcept {
+	return wheelDelta;
 }
 
 std::optional<Mouse::Event> Mouse::Read() noexcept
@@ -128,12 +128,14 @@ void Mouse::OnRightReleased(int x, int y) noexcept
 
 void Mouse::OnWheelUp(int x, int y) noexcept
 {
+	wheelDelta = 1;
 	buffer.push(Mouse::Event(Mouse::Event::Type::WheelUp, *this));
 	TrimBuffer();
 }
 
 void Mouse::OnWheelDown(int x, int y) noexcept
 {
+	wheelDelta = -1;
 	buffer.push(Mouse::Event(Mouse::Event::Type::WheelDown, *this));
 	TrimBuffer();
 }

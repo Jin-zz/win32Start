@@ -27,6 +27,7 @@ private:
 	std::vector<std::unique_ptr<class Melon>> melons;
 	std::vector<std::unique_ptr<class Box>> boxs;
 	void updateCameraRotateMouse(float posx, float posy);
+	void updateThirdCameraDisY(float delta);
 	void updateCameraRotateKeyboard(float posx, float posy);
 
 	static constexpr size_t nDrawables = 180;

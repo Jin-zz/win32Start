@@ -4,17 +4,13 @@ namespace dx = DirectX;
 
 DirectX::XMMATRIX Camera::GetMatrix(Box* box) const noexcept
 {
-    //const auto pos = dx::XMVector3Transform(
-    //    dx::XMVectorSet(0.0f, 0.0f, -r, 0.0f),
-    //    dx::XMMatrixRotationRollPitchYaw(phi, -theta, 0.0f)
-    //);
-    //return dx::XMMatrixLookAtLH(
-    //    pos,
-    //    dx::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
-    //    dx::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)
-    //) * dx::XMMatrixRotationRollPitchYaw(
-    //    pitch, -yaw, roll
-    //);
+    if (state == State::DefaultPerson) {
+        return dx::XMMatrixLookAtLH(
+            dx::XMVectorSet(0.0f, 0.0f, -r, 0.0f),
+            dx::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
+            dx::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)
+        ) ;
+    }
 
     return dx::XMMatrixLookAtLH(
         box->cameraPos,

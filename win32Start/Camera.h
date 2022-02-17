@@ -20,7 +20,7 @@ public:
         FirstPerson,
         ThirdPerson
     };
-    State state = State::ThirdPerson;
+    State state = State::DefaultPerson;
 private:
     float r = 10.0f;
     float theta = 0.0f;

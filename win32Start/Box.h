@@ -34,8 +34,8 @@ public:
     DirectX::XMVECTOR tangent = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
     DirectX::XMVECTOR UpDirection = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
-    void setTangent();
-    DirectX::XMVECTOR getTangentPos(float dis);
+    //void setTangent();
+    //DirectX::XMVECTOR getTangentPos(float dis);
     void updateCamera();
 
 public:
@@ -68,7 +68,7 @@ public:
     DirectX::XMVECTOR cameraFocus = DirectX::XMVectorSet(0.0f, 1.0, 0.0, 0.0f);
     DirectX::XMVECTOR cameraUp = DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
     float cameraX0 = 0.0f;
-    float cameraY0 = 10.0f;
+    float cameraY0 = 0.0f; // first camera = 0.0f ; third camera = 10.f
     float cameraZ0 = 0.0f;
 
 

@@ -79,8 +79,10 @@ void App::DoFrame()
 
 	while (const auto e = wnd.kbd.ReadKey()) {
 		Box::State state = boxs[0].get()->orbitName;
-		// 切换地月轨道
-		if (e.value().GetCode() == 'A') {
+		char key = e.value().GetCode();
+		switch (key) {
+		case 'A': {
+			// 切换地月轨道
 			if (state == Box::State::in_earthtomoon) break;
 			if (box->last_orbitName == Box::State::in_moon && box->isStart == false) {
 				box->isStart = true;
@@ -88,9 +90,10 @@ void App::DoFrame()
 
 			box->last_orbitName = box->orbitName;
 			box->orbitName = Box::State::in_earthtomoon;
+			break;
 		}
-		// 切换地球轨道
-		else if (e.value().GetCode() == 'S') {
+		case 'S': {
+			// 切换地球轨道
 			if (state == Box::State::in_earth || state == Box::State::in_moon) break;
 
 			if (box->isNearEarth()) {
@@ -100,10 +103,10 @@ void App::DoFrame()
 			else {
 				MessageBox(nullptr, "not in near Earth point", "Standard Exception", MB_OK | MB_ICONEXCLAMATION);
 			}
-
+			break;
 		}
-		// 切换月球轨道
-		else if (e.value().GetCode() == 'D') {
+		case 'D': {
+			// 切换月球轨道
 			if (state == Box::State::in_moon || state == Box::State::in_earth) break;
 
 			if (box->isNearMoon(moon->transX * 2.0f, moon->transY * 2.0f, moon->transZ * 2.0f)) {
@@ -115,7 +118,35 @@ void App::DoFrame()
 			else {
 				MessageBox(nullptr, "not in near Moon point ", "Standard Exception", MB_OK | MB_ICONEXCLAMATION);
 			}
+			break;
+		}
+		case 'Z': {
+			// 固定摄像机
+			cam.state = Camera::State::DefaultPerson;
+			break;
+		}
+		case 'X': {
+			// 第一人称摄像机
+			cam.state = Camera::State::FirstPerson;
+			box->cameraY0 = 0.0f;
+			cam.pitch = 0.0f;
+			cam.yaw = 0.0f;
+			box->cameraX0 = 0.0f;
+			box->cameraZ0 = 0.0f;
+			break;
+		}
+		case 'C': {
+			// 第三人称摄像机
+			cam.state = Camera::State::ThirdPerson;
+			cam.pitch = 0.0f;
+			cam.yaw = 0.0f;
+			box->cameraY0 = 10.0f;
+			box->cameraX0 = 0.0f;
+			box->cameraZ0 = 0.0f;
 
+			break;
+		}
+		
 
 		}
 	}
@@ -145,12 +176,16 @@ void App::DoFrame()
 				break;
 			}
 			case Mouse::Event::Type::WheelUp:
+			case Mouse::Event::Type::WheelDown:
 			{
+				updateThirdCameraDisY(e->getWheelDelta());
+
 				std::ostringstream oss;
-				oss << "Mouse moved to: (" << e->getWheelDeltaCarry() << ")\n";
+				oss << "Mouse moved to: (" << box->cameraY0 << ")\n";
 				wnd.SetTitle(oss.str());
 				break;
 			}
+
 		}
 	}
 
@@ -181,9 +216,27 @@ void App::updateCameraRotateMouse(float posx, float posy) {
 		Box* box = boxs[0].get();
 		box->cameraX0 = cameraRotateY;
 		box->cameraZ0 = cameraRotateX;
+	}
+}
 
+
+void App::updateThirdCameraDisY(float delta) {
+	Box* box = boxs[0].get();
+	switch (cam.state) {
+	case Camera::State::FirstPerson: {
+		break;
+	}
+	case Camera::State::ThirdPerson: {
+		// box->cameraY0 defalut = 10.0f 
+		if (box->cameraY0 >= 16.0f && delta > 0) {
+			return;
+		}
+		if (box->cameraY0 <= 7.0f && delta < 0) {
+			return;
+		}
+		box->cameraY0 += delta * 0.1f;
+		break;
+	}
 	}
 
-
-	
 }
