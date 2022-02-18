@@ -10,7 +10,7 @@ public:
     {
         namespace dx = DirectX;
 
-        constexpr float side = 1.0f / 2.0f;
+        constexpr float side = 1.0f / 2.0f ;
 
         std::vector<dx::XMFLOAT3> vertices;
         vertices.emplace_back(-side, -side, -side); // 0
