@@ -2,10 +2,12 @@
 #include "BindableBase.h"
 #include "GraphicsThrowMacros.h"
 #include "Sphere.h"
-
+#include "Surface.h"
+#include "Texture.h"
+#include "Sampler.h"
 
 Melon::Melon(Graphics& gfx,
-	float scaleoffset, float tx, float ty, float tz, float r, float rotatespeed,
+	float scaleoffset, float tx, float ty, float tz, float r, float rotatespeed, std::string fn,
 	std::mt19937& rng,
 	std::uniform_real_distribution<float>& adist,
 	std::uniform_real_distribution<float>& ddist,
@@ -14,6 +16,8 @@ Melon::Melon(Graphics& gfx,
 	std::uniform_int_distribution<int>& longdist,
 	std::uniform_int_distribution<int>& latdist)
 	:
+	// texture
+	filename(fn),
 	// scale
 	scaleOffset(scaleoffset),
 	// translate
@@ -38,11 +42,11 @@ Melon::Melon(Graphics& gfx,
 
 	if (!IsStaticInitialized())
 	{
-		auto pvs = std::make_unique<VertexShader>(gfx, L"ColorIndexVS.cso");
+		auto pvs = std::make_unique<VertexShader>(gfx, L"TextureVS.cso");
 		auto pvsbc = pvs->GetBytecode();
 		AddStaticBind(std::move(pvs));
 
-		AddStaticBind(std::make_unique<PixelShader>(gfx, L"ColorIndexPS.cso"));
+		AddStaticBind(std::make_unique<PixelShader>(gfx, L"TexturePS.cso"));
 
 		struct PixelShaderConstants
 		{
@@ -54,24 +58,25 @@ Melon::Melon(Graphics& gfx,
 				float a;
 			} face_colors[8];
 		};
-		const PixelShaderConstants cb2 =
-		{
-			{
-				{ 1.0f,1.0f,1.0f },
-				{ 1.0f,0.0f,0.0f },
-				{ 0.0f,1.0f,0.0f },
-				{ 1.0f,1.0f,0.0f },
-				{ 0.0f,0.0f,1.0f },
-				{ 1.0f,0.0f,1.0f },
-				{ 0.0f,1.0f,1.0f },
-				{ 0.0f,0.0f,0.0f },
-			}
-		};
-		AddStaticBind(std::make_unique<PixelConstantBuffer<PixelShaderConstants>>(gfx, cb2));
+		//const PixelShaderConstants cb2 =
+		//{
+		//	{
+		//		{ 1.0f,1.0f,1.0f },
+		//		{ 1.0f,0.0f,0.0f },
+		//		{ 0.0f,1.0f,0.0f },
+		//		{ 1.0f,1.0f,0.0f },
+		//		{ 0.0f,0.0f,1.0f },
+		//		{ 1.0f,0.0f,1.0f },
+		//		{ 0.0f,1.0f,1.0f },
+		//		{ 0.0f,0.0f,0.0f },
+		//	}
+		//};
+		//AddStaticBind(std::make_unique<PixelConstantBuffer<PixelShaderConstants>>(gfx, cb2));
 
 		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 		{
 			{ "Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
+			{ "TexCoord",0,DXGI_FORMAT_R32G32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0 }  // 纹理信息
 		};
 		AddStaticBind(std::make_unique<InputLayout>(gfx, ied, pvsbc));
 
@@ -81,12 +86,22 @@ Melon::Melon(Graphics& gfx,
 	struct Vertex
 	{
 		dx::XMFLOAT3 pos;
+		struct
+		{
+			float u;
+			float v;
+		} tex;
 	};
-	auto model = Sphere::MakeTesselated<Vertex>(latdist(rng), longdist(rng));
-	// deform vertices of model by linear transformation
-	model.Transform(dx::XMMatrixScaling(1.0f, 1.0f, 1.0f));
+	auto model = Sphere::MakeTesselated<Vertex>(20, 20);
+	 //deform vertices of model by linear transformation
+	//model.Transform(dx::XMMatrixScaling(1.0f, 1.0f, 1.0f));
 
 	AddBind(std::make_unique<VertexBuffer>(gfx, model.vertices));
+
+	// 添加纹理资源
+	AddBind(std::make_unique<Texture>(gfx, Surface::FromFile(filename)));
+	// 绑定采样器
+	AddStaticBind(std::make_unique<Sampler>(gfx));
 
 	AddIndexBuffer(std::make_unique<IndexBuffer>(gfx, model.indices));
 

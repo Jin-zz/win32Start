@@ -4,7 +4,7 @@
 class Melon : public DrawableBase<Melon>
 {
 public:
-    Melon(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float r, float rotatespeed, 
+    Melon(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float r, float rotatespeed, std::string fn,
         std::mt19937& rng,
         std::uniform_real_distribution<float>& adist,
         std::uniform_real_distribution<float>& ddist,
@@ -20,6 +20,7 @@ public:
     float transX = 0.0f;
     float transY = 0.0f;
     float transZ = 0.0f;
+    std::string filename;
 private:
     // pos
     struct {

@@ -37,6 +37,9 @@
     <Filter Include="头文件\Geometry">
       <UniqueIdentifier>{51c6e847-28eb-4089-9471-9dc678d2a9c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="detex">
+      <UniqueIdentifier>{661cfde0-ed7e-4957-8923-3aaaf59f9ee6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -107,6 +110,21 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Surface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GDIPlusMananger.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sampler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sheet.cpp">
+      <Filter>源文件\Drawable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,12 +215,6 @@
     <ClInclude Include="Sheet.h">
       <Filter>头文件\Drawable</Filter>
     </ClInclude>
-    <ClInclude Include="Sampler.h">
-      <Filter>头文件\Bindable</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>头文件\Bindable</Filter>
-    </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>头文件\Geometry</Filter>
     </ClInclude>
@@ -229,6 +241,21 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Surface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GDIPlusMananger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Sampler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="dxtex\include\dxtex\DirectXTex.h">
+      <Filter>detex</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +290,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="ColorIndexPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="TextureVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

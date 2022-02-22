@@ -8,12 +8,29 @@
 #include <algorithm>
 #include "ChiliMath.h"
 #include <iostream>
+#include "Surface.h"
+#include "GDIPlusMananger.h"
+#include "Sheet.h"
+#include "DirectXTex.h"
+
+
+
+
+GDIPlusManager gdipm;
 
 // 构造函数中创建窗口
 App::App()
 	:
 	wnd(800, 600, "The Donkey Fart Box")
 {
+	auto scratch = DirectX::ScratchImage{};
+	DirectX::LoadFromWICFile(L"Image\\face.png", DirectX::WIC_FLAGS_NONE, nullptr, scratch);
+	auto image = scratch.GetImage(0, 0, 0);
+	auto a = image->pixels[0];
+	auto b = image->pixels[1];
+	auto c = image->pixels[2];
+	auto d = image->pixels[3];
+
 
 	Graphics& gfx = wnd.Gfx();
 	std::mt19937 rng{ std::random_device{}() };
@@ -27,15 +44,19 @@ App::App()
 	std::uniform_int_distribution<int> typedist{ 0,2 };
 
 	drawables.push_back(std::make_unique<Melon>(
-		gfx, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, rng, adist, ddist,
+		gfx, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, "Image\\earth.png", rng, adist, ddist,
 		odist, rdist, longdist, latdist
 		));
 
 	drawables.push_back(std::make_unique<Melon>(
-		gfx, 0.5f, 5.0f, 0.0f, 0.0f, 7.0f, 1.0f, rng, adist, ddist,
+		gfx, 0.5f, 5.0f, 0.0f, 0.0f, 7.0f, 1.0f,"Image\\moon.jpg", rng, adist, ddist,
 		odist, rdist, longdist, latdist
 		));
 
+	//sheets.push_back(std::make_unique<Sheet>(
+	//	gfx, rng, adist, ddist,
+	//	odist, rdist
+	//	));
 
 	boxs.push_back(std::make_unique<Box>(
 		gfx, 0.1f, 5.0f, 0.0f, 0.0f, 3.0f, rng, adist, ddist,
@@ -44,6 +65,7 @@ App::App()
 
 
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+
 }
 
 // 处理消息内容
@@ -157,11 +179,18 @@ void App::DoFrame()
 		d->Draw(wnd.Gfx());
 	}
 
+	for (auto& d : melons)
+	{
+		d->Update(dt);
+		d->Draw(wnd.Gfx());
+	}
+
 	for (auto& d : boxs)
 	{
 		d->Update(dt);
 		d->Draw(wnd.Gfx());
 	}
+
 
 	while (const auto e = wnd.mouse.Read())
 	{

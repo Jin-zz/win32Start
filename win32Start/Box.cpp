@@ -3,6 +3,9 @@
 #include "GraphicsThrowMacros.h"
 #include "Sphere.h"
 #include "Cube.h"
+#include "Surface.h"
+#include "Texture.h"
+#include "Sampler.h"
 
 Box::Box(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float r,
 	std::mt19937& rng,
@@ -38,49 +41,34 @@ Box::Box(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float r
 		struct Vertex
 		{
 			dx::XMFLOAT3 pos;
+			struct
+			{
+				float u;
+				float v;
+			} tex;
 		};
 
-		const auto model = Cube::Make<Vertex>();
+
+		const auto model = Cube::MakeSkinned<Vertex>();
 
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, model.vertices));
+		// 添加纹理资源
+		AddStaticBind(std::make_unique<Texture>(gfx, Surface::FromFile("Image\\wall.jpg")));
+		// 绑定采样器
+		AddStaticBind(std::make_unique<Sampler>(gfx));
 
-
-		auto pvs = std::make_unique<VertexShader>(gfx, L"ColorIndexVS.cso");
+		auto pvs = std::make_unique<VertexShader>(gfx, L"TextureVS.cso");
 		auto pvsbc = pvs->GetBytecode();
 		AddStaticBind(std::move(pvs));
 
-		AddStaticBind(std::make_unique<PixelShader>(gfx, L"ColorIndexPS.cso"));
+		AddStaticBind(std::make_unique<PixelShader>(gfx, L"TexturePS.cso"));
 
 		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, model.indices));
-
-		struct PixelShaderConstants
-		{
-			struct
-			{
-				float r;
-				float g;
-				float b;
-				float a;
-			} face_colors[8];
-		};
-		const PixelShaderConstants cb2 =
-		{
-			{
-				{ 1.0f,1.0f,1.0f },
-				{ 1.0f,0.0f,0.0f },
-				{ 0.0f,1.0f,0.0f },
-				{ 1.0f,1.0f,0.0f },
-				{ 0.0f,0.0f,1.0f },
-				{ 1.0f,0.0f,1.0f },
-				{ 0.0f,1.0f,1.0f },
-				{ 0.0f,0.0f,0.0f },
-			}
-		};
-		AddStaticBind(std::make_unique<PixelConstantBuffer<PixelShaderConstants>>(gfx, cb2));
 
 		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 		{
 			{ "Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
+			{ "TexCoord",0,DXGI_FORMAT_R32G32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0 }  // 纹理信息
 		};
 		AddStaticBind(std::make_unique<InputLayout>(gfx, ied, pvsbc));
 

@@ -26,6 +26,8 @@ private:
 	std::vector<std::unique_ptr<class Melon>> drawables;
 	std::vector<std::unique_ptr<class Melon>> melons;
 	std::vector<std::unique_ptr<class Box>> boxs;
+	std::vector<std::unique_ptr<class Drawable>> sheets;
+
 	void updateCameraRotateMouse(float posx, float posy);
 	void updateThirdCameraDisY(float delta);
 	void updateCameraRotateKeyboard(float posx, float posy);
