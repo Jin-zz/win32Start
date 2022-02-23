@@ -9,28 +9,17 @@
 #include "ChiliMath.h"
 #include <iostream>
 #include "Surface.h"
-#include "GDIPlusMananger.h"
-#include "Sheet.h"
 #include "DirectXTex.h"
+#include "Sheet.h"
+#include "Skybox.h"
+#include "Bindable.h"
 
-
-
-
-GDIPlusManager gdipm;
 
 // 构造函数中创建窗口
 App::App()
 	:
 	wnd(800, 600, "The Donkey Fart Box")
 {
-	auto scratch = DirectX::ScratchImage{};
-	DirectX::LoadFromWICFile(L"Image\\face.png", DirectX::WIC_FLAGS_NONE, nullptr, scratch);
-	auto image = scratch.GetImage(0, 0, 0);
-	auto a = image->pixels[0];
-	auto b = image->pixels[1];
-	auto c = image->pixels[2];
-	auto d = image->pixels[3];
-
 
 	Graphics& gfx = wnd.Gfx();
 	std::mt19937 rng{ std::random_device{}() };
@@ -53,16 +42,15 @@ App::App()
 		odist, rdist, longdist, latdist
 		));
 
-	//sheets.push_back(std::make_unique<Sheet>(
-	//	gfx, rng, adist, ddist,
-	//	odist, rdist
-	//	));
-
 	boxs.push_back(std::make_unique<Box>(
 		gfx, 0.1f, 5.0f, 0.0f, 0.0f, 3.0f, rng, adist, ddist,
 	    odist, rdist, bdist
 		)); 
 
+	skyboxs.push_back(std::make_unique<Skybox>(
+		gfx, 30.0f, 0.0f, 0.0f, 0.0f, 1.0f,  rng, adist, ddist,
+		odist, rdist, bdist
+		));
 
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 
@@ -95,7 +83,7 @@ void App::DoFrame()
 	const auto dt = timer.Mark();
 	wnd.Gfx().ClearBuffer(0.07f, 0.0f, 0.12f);
 	wnd.Gfx().SetCamera(cam.GetMatrix(box));
-	//wnd.Gfx().SetCamera(dx::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
+	//wnd.Gfx().SetCamera(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
 
 	box->getMoonPos(moon->transX, moon->transY, moon->transZ);
 
@@ -173,23 +161,26 @@ void App::DoFrame()
 		}
 	}
 
+
 	for (auto& d : drawables)
 	{
 		d->Update(dt);
 		d->Draw(wnd.Gfx());
 	}
 
-	for (auto& d : melons)
-	{
-		d->Update(dt);
-		d->Draw(wnd.Gfx());
-	}
 
 	for (auto& d : boxs)
 	{
 		d->Update(dt);
 		d->Draw(wnd.Gfx());
 	}
+
+	for (auto& d : skyboxs)
+	{
+		d->Update(dt);
+		d->Draw(wnd.Gfx());
+	}
+
 
 
 	while (const auto e = wnd.mouse.Read())

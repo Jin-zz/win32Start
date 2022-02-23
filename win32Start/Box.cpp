@@ -54,6 +54,7 @@ Box::Box(Graphics& gfx, float scaleoffset, float tx, float ty, float tz, float r
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, model.vertices));
 		// 添加纹理资源
 		AddStaticBind(std::make_unique<Texture>(gfx, Surface::FromFile("Image\\wall.jpg")));
+
 		// 绑定采样器
 		AddStaticBind(std::make_unique<Sampler>(gfx));
 

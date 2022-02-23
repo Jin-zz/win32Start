@@ -22,4 +22,5 @@ void TransformCbuf::Bind(Graphics& gfx) noexcept
     pVcbuf->Bind(gfx);
 }
 
+
 std::unique_ptr<VertexConstantBuffer<DirectX::XMMATRIX>> TransformCbuf::pVcbuf;

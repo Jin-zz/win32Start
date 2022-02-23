@@ -114,9 +114,6 @@
     <ClCompile Include="Surface.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="GDIPlusMananger.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -125,6 +122,18 @@
     </ClCompile>
     <ClCompile Include="Sheet.cpp">
       <Filter>源文件\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeTexture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>源文件\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Rasterizer.cpp">
+      <Filter>源文件\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyTransfromCbuf.cpp">
+      <Filter>源文件\Bindable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,9 +254,6 @@
     <ClInclude Include="Surface.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GDIPlusMananger.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -256,6 +262,18 @@
     </ClInclude>
     <ClInclude Include="dxtex\include\dxtex\DirectXTex.h">
       <Filter>detex</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyTransfromCbuf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>头文件\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasterizer.h">
+      <Filter>头文件\Bindable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +314,18 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="TexturePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SkyboxVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="SkyboxPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="TestPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="TestVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

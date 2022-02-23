@@ -6,6 +6,7 @@
 class Cube
 {
 public:
+
 	template<class V>
 	static IndexedTriangleList<V> Make()
 	{
@@ -34,6 +35,7 @@ public:
 			}
 		};
 	}
+
 	template<class V>
 	static IndexedTriangleList<V> MakeSkinned()
 	{
