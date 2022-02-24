@@ -37,9 +37,6 @@
     <Filter Include="头文件\Geometry">
       <UniqueIdentifier>{51c6e847-28eb-4089-9471-9dc678d2a9c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="detex">
-      <UniqueIdentifier>{661cfde0-ed7e-4957-8923-3aaaf59f9ee6}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -60,7 +57,7 @@
     <ClCompile Include="APP.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ChiliTimer.cpp">
+    <ClCompile Include="Timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Graphics.cpp">
@@ -98,9 +95,6 @@
     </ClCompile>
     <ClCompile Include="Bindable.cpp">
       <Filter>源文件\Bindable</Filter>
-    </ClCompile>
-    <ClCompile Include="Pyramid.cpp">
-      <Filter>源文件\Drawable</Filter>
     </ClCompile>
     <ClCompile Include="Melon.cpp">
       <Filter>源文件\Drawable</Filter>
@@ -158,13 +152,10 @@
     <ClInclude Include="APP.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ChiliTimer.h">
+    <ClInclude Include="Timer.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Graphics.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DxgiInfoManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsThrowMacros.h">
@@ -183,9 +174,6 @@
       <Filter>头文件\Bindable</Filter>
     </ClInclude>
     <ClInclude Include="Indexbuffer.h">
-      <Filter>头文件\Bindable</Filter>
-    </ClInclude>
-    <ClInclude Include="InputBuffer.h">
       <Filter>头文件\Bindable</Filter>
     </ClInclude>
     <ClInclude Include="InputLayout.h">
@@ -218,16 +206,10 @@
     <ClInclude Include="Melon.h">
       <Filter>头文件\Drawable</Filter>
     </ClInclude>
-    <ClInclude Include="Pyramid.h">
-      <Filter>头文件\Drawable</Filter>
-    </ClInclude>
     <ClInclude Include="Sheet.h">
       <Filter>头文件\Drawable</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
-      <Filter>头文件\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Prism.h">
       <Filter>头文件\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Plane.h">
@@ -236,10 +218,7 @@
     <ClInclude Include="Cube.h">
       <Filter>头文件\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Cone.h">
-      <Filter>头文件\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="ChiliMath.h">
+    <ClInclude Include="Math.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="IndexedTriangleList.h">
@@ -260,9 +239,6 @@
     <ClInclude Include="Sampler.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="dxtex\include\dxtex\DirectXTex.h">
-      <Filter>detex</Filter>
-    </ClInclude>
     <ClInclude Include="CubeTexture.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -274,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="Rasterizer.h">
       <Filter>头文件\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="DxgiInfoManager.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -298,18 +277,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="ColorBlendPS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="ColorBlendVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="ColorIndexVS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="ColorIndexPS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="TextureVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>

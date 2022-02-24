@@ -1,12 +1,10 @@
 #include "App.h"
 #include "Melon.h"
-#include "Pyramid.h"
 #include <sstream>
-#include <iomanip>
 #include "Box.h"
 #include <memory>
 #include <algorithm>
-#include "ChiliMath.h"
+#include "Math.h"
 #include <iostream>
 #include "Surface.h"
 #include "DirectXTex.h"
@@ -18,7 +16,7 @@
 // 构造函数中创建窗口
 App::App()
 	:
-	wnd(800, 600, "The Donkey Fart Box")
+	wnd(800, 600, "Win32Start")
 {
 
 	Graphics& gfx = wnd.Gfx();
@@ -48,6 +46,7 @@ App::App()
 		)); 
 
 
+	// shybox
 	sheets.push_back(std::make_unique<Sheet>(
     gfx, 15.0f, 0.0f, 0.0f, 15.0f, "Image\\SpaceBox\\0.png", 0.0f, 0.0f, 270.0f, rng, adist, ddist,
     odist, rdist

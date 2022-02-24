@@ -115,46 +115,6 @@ Surface Surface::FromFile(const std::string& name)
 	return Surface(std::move(scratch));
 }
 
-void Surface::Save(const std::string& filename) const
-{
-	const auto GetCodecID = [](const std::string& filename) {
-		const std::filesystem::path path = filename;
-		const auto ext = path.extension().string();
-		if (ext == ".png")
-		{
-			return DirectX::WIC_CODEC_PNG;
-		}
-		else if (ext == ".jpg")
-		{
-			return DirectX::WIC_CODEC_JPEG;
-		}
-		else if (ext == ".bmp")
-		{
-			return DirectX::WIC_CODEC_BMP;
-		}
-		throw Exception(__LINE__, __FILE__, filename, "Image format not supported");
-	};
-
-	wchar_t wideName[512];
-	mbstowcs_s(nullptr, wideName, filename.c_str(), _TRUNCATE);
-
-	HRESULT hr = DirectX::SaveToWICFile(
-		*scratch.GetImage(0, 0, 0),
-		DirectX::WIC_FLAGS_NONE,
-		GetWICCodec(GetCodecID(filename)),
-		wideName
-	);
-	if (FAILED(hr))
-	{
-		throw Surface::Exception(__LINE__, __FILE__, filename, "Failed to save image", hr);
-	}
-}
-
-bool Surface::AlphaLoaded() const noexcept
-{
-	return !scratch.IsAlphaAllOpaque();
-}
-
 Surface::Surface(DirectX::ScratchImage scratch) noexcept
 	:
 	scratch(std::move(scratch))

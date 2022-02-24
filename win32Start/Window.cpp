@@ -1,22 +1,3 @@
-/******************************************************************************************
-*	Chili Direct3D Engine																  *
-*	Copyright 2018 PlanetChili <http://www.planetchili.net>								  *
-*																						  *
-*	This file is part of Chili Direct3D Engine.											  *
-*																						  *
-*	Chili Direct3D Engine is free software: you can redistribute it and/or modify		  *
-*	it under the terms of the GNU General Public License as published by				  *
-*	the Free Software Foundation, either version 3 of the License, or					  *
-*	(at your option) any later version.													  *
-*																						  *
-*	The Chili Direct3D Engine is distributed in the hope that it will be useful,		  *
-*	but WITHOUT ANY WARRANTY; without even the implied warranty of						  *
-*	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the						  *
-*	GNU General Public License for more details.										  *
-*																						  *
-*	You should have received a copy of the GNU General Public License					  *
-*	along with The Chili Direct3D Engine.  If not, see <http://www.gnu.org/licenses/>.    *
-******************************************************************************************/
 #include "Window.h"
 #include <sstream>
 #include "resource1.h"
@@ -199,16 +180,10 @@ LRESULT CALLBACK Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPAR
  */
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
-	//if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-	//{
-	//	return true;
-	//}
-	//const auto& imio = ImGui::GetIO();
+
 
 	switch (msg)
 	{
-		// we don't want the DefProc to handle this message because
-		// we want our destructor to destroy the window, so return 0 instead of break
 	case WM_CLOSE:
 		PostQuitMessage(0);
 		return 0;
@@ -219,9 +194,9 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 
 	/*********** KEYBOARD MESSAGES ***********/
 	case WM_KEYDOWN:
-		// syskey commands need to be handled to track ALT key (VK_MENU) and F10
+
 	case WM_SYSKEYDOWN:
-        if( !(lParam & 0x40000000) || kbd.AutorepeatIsEnabled() ) // filter autorepeat
+        if( !(lParam & 0x40000000) || kbd.AutorepeatIsEnabled() )
         {
             kbd.OnKeyPressed( static_cast<unsigned char>(wParam) );
         }
@@ -263,32 +238,6 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 				mouse.OnMouseLeave();
 			}
 		}
-		break;
-	}
-	case WM_LBUTTONDOWN:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnLeftPressed(pt.x, pt.y);
-		// bring window to foreground on lclick client region
-		SetForegroundWindow(hWnd);
-		break;
-	}
-	case WM_RBUTTONDOWN:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnRightPressed(pt.x, pt.y);
-		break;
-	}
-	case WM_LBUTTONUP:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnLeftReleased(pt.x, pt.y);
-		break;
-	}
-	case WM_RBUTTONUP:
-	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		mouse.OnRightReleased(pt.x, pt.y);
 		break;
 	}
 	case WM_MOUSEWHEEL:

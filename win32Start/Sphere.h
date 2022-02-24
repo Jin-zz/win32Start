@@ -1,7 +1,7 @@
 #pragma once
 #include "IndexedTriangleList.h"
 #include <DirectXMath.h>
-#include "ChiliMath.h"
+#include "Math.h"
 
 class Sphere
 {
@@ -36,12 +36,6 @@ public:
                 dx::XMStoreFloat3(&vertices.back().pos, v);
 
                 vertices[vertices.size() - 1].tex = { float(iLat-1) / latDiv, float(iLong) / longDiv };
-                //V val;
-                //val.pos = v;
-                //val.tex = t;
-                //vertices.emplace_back(val);
-
-  
             }
         }
 
