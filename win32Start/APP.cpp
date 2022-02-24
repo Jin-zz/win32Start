@@ -33,12 +33,12 @@ App::App()
 	std::uniform_int_distribution<int> typedist{ 0,2 };
 
 	drawables.push_back(std::make_unique<Melon>(
-		gfx, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, "Image\\earth.png", rng, adist, ddist,
+		gfx, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, "Image\\earth.jpg", rng, adist, ddist,
 		odist, rdist, longdist, latdist
 		));
 
 	drawables.push_back(std::make_unique<Melon>(
-		gfx, 0.5f, 5.0f, 0.0f, 0.0f, 7.0f, 1.0f,"Image\\moon.jpg", rng, adist, ddist,
+		gfx, 0.5f, 0.0f, 0.0f, 0.0f, 7.0f, 1.0f,"Image\\moon.jpg", rng, adist, ddist,
 		odist, rdist, longdist, latdist
 		));
 
@@ -47,9 +47,34 @@ App::App()
 	    odist, rdist, bdist
 		)); 
 
-	skyboxs.push_back(std::make_unique<Skybox>(
-		gfx, 30.0f, 0.0f, 0.0f, 0.0f, 1.0f,  rng, adist, ddist,
-		odist, rdist, bdist
+
+	sheets.push_back(std::make_unique<Sheet>(
+    gfx, 15.0f, 0.0f, 0.0f, 15.0f, "Image\\SpaceBox\\0.png", 0.0f, 0.0f, 270.0f, rng, adist, ddist,
+    odist, rdist
+    ));
+
+	sheets.push_back(std::make_unique<Sheet>(
+		gfx, 15.0f, 0.0f, 0.0f, -15.0f, "Image\\SpaceBox\\1.png", 0.0f, 180.0f, 270.0f, rng, adist, ddist,
+		odist, rdist
+		));
+
+	sheets.push_back(std::make_unique<Sheet>(
+		gfx, 15.0f, -15.0f, 0.0f, 0.0f, "Image\\SpaceBox\\4.png", 0.0f, 270.0f, 270.0f, rng, adist, ddist,
+		odist, rdist
+		));
+
+	sheets.push_back(std::make_unique<Sheet>(
+		gfx, 15.0f, 15.0f, 0.0f, 0.0f, "Image\\SpaceBox\\5.png", 0.0f, 90.0f, 270.0f, rng, adist, ddist,
+		odist, rdist
+		));
+
+	sheets.push_back(std::make_unique<Sheet>(
+		gfx, 15.0f, 0.0f, 15.0f, 0.0f, "Image\\SpaceBox\\2.png", 270.0f, 0.0f, 180.0f, rng, adist, ddist,
+		odist, rdist
+		));
+	sheets.push_back(std::make_unique<Sheet>(
+		gfx, 15.0f, 0.0f, -15.0f, 0.0f, "Image\\SpaceBox\\3.png", 90.0, 0.0f, 0.0f, rng, adist, ddist,
+		odist, rdist
 		));
 
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
@@ -161,6 +186,12 @@ void App::DoFrame()
 		}
 	}
 
+	for (auto& d : sheets)
+	{
+		d->Update(dt);
+		d->Draw(wnd.Gfx());
+	}
+
 
 	for (auto& d : drawables)
 	{
@@ -175,11 +206,11 @@ void App::DoFrame()
 		d->Draw(wnd.Gfx());
 	}
 
-	for (auto& d : skyboxs)
-	{
-		d->Update(dt);
-		d->Draw(wnd.Gfx());
-	}
+	//for (auto& d : skyboxs)
+	//{
+	//	d->Update(dt);
+	//	d->Draw(wnd.Gfx());
+	//}
 
 
 
@@ -216,7 +247,8 @@ void App::DoFrame()
 void App::updateCameraRotateMouse(float posx, float posy) {
 	switch (cam.state) {
 	case Camera::State::FirstPerson:
-		cameraRotateX = posx / wnd.width * 180.0f - 90.0f;
+		cameraRotateX = posx / wnd.width * 360.0f - 180.0f;
+		//cameraRotateX = posx / wnd.width * 180.0f - 90.0f;
 		cameraRotateY = -posy / wnd.height * 90.0f + 45.0f;
 		cameraRotateX = cameraRotateX * PI / 180.0f;
 		cameraRotateY = cameraRotateY * PI / 180.0f;

@@ -38,6 +38,7 @@ Melon::Melon(Graphics& gfx,
 	theta(0.0f),
 	phi(0.0f)
 {
+	angle = -50.0f;
 	namespace dx = DirectX;
 
 	if (!IsStaticInitialized())
@@ -118,8 +119,9 @@ void Melon::Update(float dt) noexcept
 	//chi += dchi * dt;
 
 	if (radius != 0) {
-		last_angle = angle;
+		//last_angle = angle;
 		angle = angle + 50.0f * dt;
+
 		//transX += angle;
 		float ofx = radius * cos(angle * PI / 180.0f);
 		float ofy = radius * sin(angle * PI / 180.0f);
